@@ -1,25 +1,23 @@
 {
-  "name": "generator-node-express",
-  "version": "0.0.3",
-  "description": "A generator for Yeoman that will kick start a Node Application using Express.",
+  "name": "generator-shippable-node-api",
+  "version": "0.0.1",
+  "description": "A generator for Yeoman that will kick start a Node Application using Express as used at Shippable",
   "keywords": [
     "yeoman-generator",
     "Express",
-    "Express3-Handlebars",
-    "Inuit.css",
-    "Bourbon"
+    "Shippable"
   ],
-  "homepage": "https://github.com/lukelarsen/generator-node-express",
-  "bugs": "https://github.com/lukelarsen/generator-node-express/issues",
+  "homepage": "https://github.com/harryi3t/generator-shippable-node-api",
+  "bugs": "https://github.com/harryi3t/generator-shippable-node-api/issues",
   "author": {
-    "name": "Luke",
-    "email": "luke@lukelarsen.com",
-    "url": "https://github.com/lukelarsen"
+    "name": "Harendra Singh",
+    "email": "harendra@shippable.com",
+    "url": "https://github.com/harryi3t"
   },
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/lukelarsen/generator-node-express.git"
+    "url": "git://github.com/harryi3t/generator-shippable-node-api.git"
   },
   "scripts": {
     "test": "mocha"

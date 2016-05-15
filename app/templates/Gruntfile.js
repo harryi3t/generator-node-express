@@ -16,21 +16,21 @@ module.exports = function (grunt) {
             },
             scripts: {
                 files: [
-                    'assets/scripts/**/*.js',
+                    'static/scripts/**/*.js',
                 ],
             },
             css: {
                 files: [
-                    'assets/styles/**/*.css',
+                    'static/styles/**/*.css',
                 ],
             },
             sass: {
-                files: ['assets/styles/**/*.scss'],
+                files: ['static/styles/**/*.scss'],
                 tasks: ['sass:dev']
             },
             images: {
                 files: [
-                    'assets/images/**/*.{png,jpg,jpeg,webp}'
+                    'static/images/**/*.{png,jpg,jpeg,webp}'
                 ],
             },
             express: {
@@ -64,7 +64,7 @@ module.exports = function (grunt) {
             },
             all: [
                 'Gruntfile.js',
-                'assets/scripts/**/*.js',
+                'static/scripts/**/*.js',
                 '!assets/scripts/vendor/*',
                 'test/spec/**/*.js'
             ]
@@ -82,8 +82,8 @@ module.exports = function (grunt) {
                 },
                 files: [{
                     expand: true,
-                    cwd: 'assets/styles/sass',
-                    dest: 'assets/styles',
+                    cwd: 'static/styles/sass',
+                    dest: 'static/styles',
                     src: ['screen.scss'],
                     ext: '.css'
                 }]
@@ -141,7 +141,7 @@ module.exports = function (grunt) {
             options: {
                 dest: 'dist/assets'
             },
-            html: ['assets/{,*/}*.html', 'views/**/*.handlebars']
+            html: ['static/{,*/}*.html', 'views/**/*.handlebars']
         },
         usemin: {
             options: {
@@ -157,7 +157,7 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: 'assets/images',
+                    cwd: 'static/images',
                     src: '**/*.{png,jpg,jpeg}',
                     dest: 'dist/assets/images'
                 }]
@@ -169,7 +169,7 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: 'assets/images',
+                    cwd: 'static/images',
                     src: '{,*/}*.svg',
                     dest: 'dist/assets/images'
                 }]
@@ -188,7 +188,7 @@ module.exports = function (grunt) {
             //     files: {
             //         'dist/assets/styles/main.css': [
             //             '.tmp/styles/{,*/}*.css',
-            //             'assets/styles/{,*/}*.css'
+            //             'static/styles/{,*/}*.css'
             //         ]
             //     }
             // }
@@ -210,7 +210,7 @@ module.exports = function (grunt) {
                 },
                 files: [{
                     expand: true,
-                    cwd: 'assets',
+                    cwd: 'static',
                     src: '*.html',
                     dest: 'dist/assets'
                 }]
@@ -224,7 +224,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     dot: true,
-                    cwd: 'assets',
+                    cwd: 'static',
                     dest: 'dist/assets',
                     src: [
                         '*.{ico,png,txt}',
@@ -243,7 +243,7 @@ module.exports = function (grunt) {
             styles: {
                 expand: true,
                 dot: true,
-                cwd: 'assets/styles',
+                cwd: 'static/styles',
                 dest: '.tmp/styles/',
                 src: '{,*/}*.css'
             },
