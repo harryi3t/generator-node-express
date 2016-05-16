@@ -9,6 +9,7 @@ var _ = require('underscore');
 var express = require('express');
 var mongoose = require('mongoose');
 var DB_URL = process.env.DB_URL || 'localhost/test';
+var API_PORT = process.env.API_PORT || 3000;
 
 // To allow more than five calls at a time:
 require('http').globalAgent.maxSockets = 10000;
@@ -16,7 +17,6 @@ require('http').globalAgent.maxSockets = 10000;
 require('./common/logger.js');
 require('./common/ActErr.js');
 require('./common/express/sendJSONResponse.js');
-require('./common/express/sendXMLResponse.js');
 require('./common/respondWithError.js');
 
 var ignoreEADDRINUSE = false;
@@ -48,7 +48,7 @@ function createExpressApp() {
       _startListening.bind(null, bag)
     ],
     function (err) {
-      logger.verbose('Completed', who);
+      logger.verbose('Completed', bag.who);
 
       if (err)
         logger.error(err.message, err);
@@ -56,7 +56,7 @@ function createExpressApp() {
   );
 }
 
-function _setupMiddlewares(next) {
+function _setupMiddlewares(bag, next) {
   var who = bag.who + '|' + _setupMiddlewares.name;
   logger.verbose('Starting', who);
 
@@ -68,13 +68,17 @@ function _setupMiddlewares(next) {
 
   app.use(require('body-parser').json({limit: '10mb'}));
   app.use(require('body-parser').urlencoded({limit: '10mb'}));
-  app.use(require('cookie-parser')());
   app.use(require('method-override')());
+  app.use(require('./common/express/errorHandler.js'));
+  app.use(require('./common/express/setCORSHeaders.js'));
 
   return next();
 }
 
-function _connectToMongo(next) {
+function _connectToMongo(bag, next) {
+  var who = bag.who + '|' + _connectToMongo.name;
+  logger.verbose('Starting', who);
+  
   mongoose.connect(DB_URL, {},
     function (err) {
       if (!err)
@@ -84,13 +88,13 @@ function _connectToMongo(next) {
   );
 }
 
-function _requireRoutes(app, next) {
+function _requireRoutes(bag, next) {
   var who = 'app.js|' + _requireRoutes.name;
   logger.debug('Inside', who);
 
   logger.info('Initializing routes');
 
-  glob.sync('./**/*Routes.js').forEach(
+  glob.sync('./api/**/*Routes.js').forEach(
     function (routeFile) {
       require(routeFile)(app);
     }
@@ -117,14 +121,15 @@ function _removeStaleRoutePermissions (bag, next) {
   });
 }
 
-function _startListening(app, next) {
+function _startListening(next) {
   var who = 'app.js|' + _startListening.name;
   logger.debug('Inside', who);
 
-  var apiPort = config.apiPort;
+  var apiPort = API_PORT;
   var tries = 0;
   ignoreEADDRINUSE = true;
   listen();
+
   function listen(error) {
     if (!apiPort)
       return next(

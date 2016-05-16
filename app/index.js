@@ -8,7 +8,7 @@ var NodeExpressGenerator = module.exports = function NodeExpressGenerator(args, 
 
   this.on('end', function () {
     this.installDependencies({
-      skipInstall: options['skip-install']
+      skipInstall: true
     });
   });
 
@@ -42,10 +42,6 @@ NodeExpressGenerator.prototype.askFor = function askFor() {
   }.bind(this));
 };
 
-NodeExpressGenerator.prototype.gruntfile = function gruntfile() {
-  this.copy('Gruntfile.js', 'Gruntfile.js');
-};
-
 NodeExpressGenerator.prototype.packageJSON = function packageJSON() {
   this.copy('_package.json', 'package.json');
 };
@@ -54,23 +50,28 @@ NodeExpressGenerator.prototype.git = function git() {
   this.copy('gitignore', '.gitignore');
 };
 
-NodeExpressGenerator.prototype.bower = function bower() {
-  this.copy('bowerrc', '.bowerrc');
-  this.copy('_bower.json', 'bower.json');
-};
-
 NodeExpressGenerator.prototype.jshint = function jshint() {
   this.copy('jshintrc', '.jshintrc');
 };
 
 NodeExpressGenerator.prototype.api = function api() {
   this.mkdir('api');
+  this.mkdir('logs');
   this.copy('api/employee/Model.js', 'api/employee/Model.js');
-  this.copy('api/employee/Route.js', 'api/employee/Route.js');
+  this.copy('api/employee/Routes.js', 'api/employee/Routes.js');
   this.copy('api/employee/getS.js', 'api/employee/getS.js');
   this.copy('api/employee/post.js', 'api/employee/post.js');
-
+  this.copy('node_modules.zip', 'node_modules.zip');
 };
+
+NodeExpressGenerator.prototype.common = function common() {
+  this.copy('common/logger.js', 'common/logger.js');
+  this.copy('common/ActErr.js', 'common/ActErr.js');
+  this.copy('common/express/sendJSONResponse.js', 'common/express/sendJSONResponse.js');
+  this.copy('common/express/setCORSHeaders.js', 'common/express/setCORSHeaders.js');
+  this.copy('common/express/errorHandler.js', 'common/express/errorHandler.js');
+  this.copy('common/respondWithError.js', 'common/respondWithError.js');
+}
 
 NodeExpressGenerator.prototype.assets = function assets() {
   this.mkdir('static');

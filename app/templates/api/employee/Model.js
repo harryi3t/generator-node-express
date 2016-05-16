@@ -12,8 +12,7 @@ var empSchema = new mongoose.Schema({
   },
   lastName: String,
   category: {
-    enum: ['sda-1', 'sda-2', 'manager'],
-    default: 'sda-1'
+    enum: ['sda-1', 'sda-2', 'manager']
   }
 });
 

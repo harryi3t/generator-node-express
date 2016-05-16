@@ -1,6 +1,6 @@
 {
   "name": "generator-shippable-node-api",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A generator for Yeoman that will kick start a Node Application using Express as used at Shippable",
   "keywords": [
     "yeoman-generator",
